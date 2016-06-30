@@ -11,7 +11,7 @@ import argparse
 import logging
 import sys
 
-from eudat.accounting.client import __version__, LOG
+from eudat.accounting.client import __version__, LOG, utils
 
 
 def main(argv=sys.argv):
@@ -94,6 +94,7 @@ class Application(object):
 
     def run(self):
         LOG.info( "addRecord called with: " + str(self.args))
+        creds = utils.getCredentials(self.args)
 
 
 if __name__ == '__main__':
