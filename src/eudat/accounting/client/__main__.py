@@ -67,7 +67,7 @@ class Application(object):
 
         ap.add_argument('-k', '--key', default='',
                         help='key used to refer to the record. '\
-                        'If not set a timestamp of the current time will be used. '\
+                        'If not set the accounting server will create the key. '\
                         'Default: "" - not set')
 
         ap.add_argument('-t', '--type', default='storage',
