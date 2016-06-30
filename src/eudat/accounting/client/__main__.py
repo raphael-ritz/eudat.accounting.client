@@ -17,7 +17,8 @@ from eudat.accounting.client import __version__, LOG
 def main(argv=sys.argv):
     """Main function called from console command
     """
-    logging.basicConfig()
+    logging.basicConfig(filename='.accounting.log', level=logging.INFO,
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     exit_code = 1
     try:
         app = Application(argv)
@@ -92,8 +93,7 @@ class Application(object):
         """Arguments of your app"""
 
     def run(self):
-        # FIXME: Replace below sample with your code
-        print("Hey! It works ;o)")
+        LOG.info( "addRecord called with: " + str(self.args))
 
 
 if __name__ == '__main__':
