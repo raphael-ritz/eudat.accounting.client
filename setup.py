@@ -50,7 +50,7 @@ setup(name='eudat.accounting.client',
       install_requires=[
           # 3rd party
           'setuptools'
-          # Others
+          'requests',
           ],
       entry_points={
           'console_scripts': ['addRecord=eudat.accounting.client.__main__:main']
