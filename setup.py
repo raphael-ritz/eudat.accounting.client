@@ -49,7 +49,7 @@ setup(name='eudat.accounting.client',
       zip_safe=False,
       install_requires=[
           # 3rd party
-          'setuptools'
+          'setuptools',
           'requests',
           ],
       entry_points={
