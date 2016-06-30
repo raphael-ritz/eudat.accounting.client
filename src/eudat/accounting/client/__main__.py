@@ -39,6 +39,9 @@ class Application(object):
     def __init__(self, argv):
         ap = argparse.ArgumentParser()
         ap.add_argument('--version', action='version', version=__version__)
+        ap.add_argument('account',
+                        help='account to be used. Typically the (P)ID of the '\
+                        'resource to be accounted')
         ap.add_argument('value', help='The value to be recorded')
         ap.add_argument('unit', help='The unit of measurement for the value provided')
         ap.add_argument('-b', '--base_url', default='https://acct.eudat.eu',
@@ -60,11 +63,6 @@ class Application(object):
         ap.add_argument('-d', '--domain', default='eudat',
                         help='name of the domain holding the account. '\
                         'Default: eudat')
-
-        ap.add_argument('-a', '--account', default='',
-                        help='account to be used. Typically the (P)ID of the '\
-                        'resource to be accounted. '\
-                        'Default: "" - not set - Should be a positional argument maybe?')
 
         ap.add_argument('-k', '--key', default='',
                         help='key used to refer to the record. '\
@@ -94,8 +92,11 @@ class Application(object):
 
     def run(self):
         LOG.info( "addRecord called with: " + str(self.args))
-        creds = utils.getCredentials(self.args)
-
+        credentials = utils.getCredentials(self.args)
+        url = utils.getUrl(self.args)
+        data = utils.getData(self.args)
+        response = utils.call(credentials, url, data)
+        print response
 
 if __name__ == '__main__':
     main()

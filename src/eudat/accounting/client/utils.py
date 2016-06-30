@@ -3,9 +3,12 @@
 
 USERKEY = "ACCOUNTING_USER"
 PWKEY = "ACCOUNTING_PW"
+URL_PATTERN = "%s/%s/%s/addRecord?"
 
 import os
 import sys
+import requests
+
 from eudat.accounting.client import LOG
 
 def getCredentials(args):
@@ -31,3 +34,33 @@ def getCredentials(args):
         sys.exit(msg)
     LOG.info("Credentials found")
     return (user, pw)
+
+def getUrl(args):
+    """Constructs the URL to call based on the parameters provided"""
+    url = URL_PATTERN % (args.base_url, args.domain, args.account)
+    LOG.info("URL: " + url)
+    return url
+    
+def getData(args):
+    """builds a query string including the data"""
+    core_pattern = "core.%s:record=%s"
+    meta_pattern = "meta.%s:record=%s"
+    vars = []
+    vars.append('account=%s' % args.account)
+    if args.key:
+        vars.append('key=%s' % args.key)
+    for k in ['type', 'value', 'unit']:
+        vars.append(core_pattern % (k, getattr(args, k)))
+    for k in ['number', 'measure_time']:
+        value = getattr(args, k)
+        if value:
+            vars.append(meta_pattern % (k, value))
+    qstring = '&'.join(vars)
+    LOG.info("query string: " + qstring)
+    return qstring
+
+def call(cred, url, data):
+    call_url = url+data
+    r = requests.post(call_url, auth=cred)
+    # TODO: add error handling
+    return r
