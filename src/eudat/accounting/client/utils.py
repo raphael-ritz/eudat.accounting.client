@@ -51,7 +51,7 @@ def getData(args):
         vars.append('key=%s' % args.key)
     for k in ['type', 'value', 'unit']:
         vars.append(core_pattern % (k, getattr(args, k)))
-    for k in ['number', 'measure_time']:
+    for k in ['number', 'measure_time', 'comment']:
         value = getattr(args, k)
         if value:
             vars.append(meta_pattern % (k, value))

@@ -83,6 +83,10 @@ class Application(object):
                         'from the current time. '\
                         'Default: "" - not set')
 
+        ap.add_argument('-c', '--comment', default='',
+                        help='arbitrary comment (goes into the meta dictionary). '\
+                        'Default: "" - not set')
+
         ap.add_argument('-v', '--verbose', action='store_true',
                         help='return the key of the accounting record created. '\
                         'Default: off')
