@@ -7,13 +7,10 @@ eudat.accounting.client
 Upload accounting records to an eudat accounting server
 """
 
-# FIXME: Please read http://pythonhosted.org/setuptools/setuptools.html to
-#        customize in depth your setup script
-
 from setuptools import setup, find_packages
 import os, sys
 
-version = '1.0.0.dev0'
+version = '1.0.0.b1'
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 
@@ -32,16 +29,19 @@ setup(name='eudat.accounting.client',
       version=version,
       description="Upload accounting records to an eudat accounting server",
       long_description=long_description,
-      # FIXME: Add more classifiers from http://pypi.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
+          "Environment :: Console",
+          "Intended Audience :: System Administrators",
           "Programming Language :: Python",
-          "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+          "Operating System :: OS Independent",
+          "License :: OSI Approved :: BSD License",
+          "Topic :: Utilities",
           ],
-      keywords='',  # FIXME: Add whatefer fits
+      keywords=['EUDAT', 'storage', 'accounting', 'comamndline', 'client'],
       author='Raphael Ritz',
       author_email='raphael.ritz@gmail.com',
-      url='http://pypi.python.org/pypi/eudat.accounting.client',
-      license='GPLv3',
+      url='https://github.com/raphael-ritz/eudat.accounting.client',
+      license='BSD',
       packages=find_packages('src'),
       package_dir = {'': 'src'},
       namespace_packages=['eudat', 'eudat.accounting'],
