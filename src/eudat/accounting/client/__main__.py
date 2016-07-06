@@ -95,12 +95,18 @@ class Application(object):
         """Arguments of your app"""
 
     def run(self):
-        LOG.info( "addRecord called with: " + str(self.args))
+        LOG.info("addRecord called with: " + str(self.args))
         credentials = utils.getCredentials(self.args)
         url = utils.getUrl(self.args)
         data = utils.getData(self.args)
         response = utils.call(credentials, url, data)
-        print response
+        if not response.ok:
+            LOG.error("status: %s" % response.status_code)
+            sys.exit(str(response.status_code))
+        LOG.info("status: %s -- record key: %s" % (response.status_code,
+                                                   response.text))
+        if self.args.verbose:
+            print response.text
 
 if __name__ == '__main__':
     main()
