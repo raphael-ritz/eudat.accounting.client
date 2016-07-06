@@ -98,7 +98,7 @@ The package can be installed directly from GitHub:
 
 .. code:: console
 
-  $ pip install git+git://github.com/raphael-ritz/eudat.accounting.client
+  $ pip install git+git://github.com/EUDAT-DPMT/eudat.accounting.client
 
 The code is organized in a nested namespace package, i.e., the real action
 is happening in the subdirectory 
@@ -122,12 +122,12 @@ Links
 
 Project home page
 
-  https://github.com/raphael-ritz/eudat.accounting.client
+  https://github.com/EUDAT-DPMT/eudat.accounting.client
 
 Source code
 
-  https://github.com/raphael-ritz/eudat.accounting.client
+  https://github.com/EUDAT-DPMT/eudat.accounting.client
 
 Issues tracker
 
-  https://github.com/raphael-ritz/eudat.accounting.client/issues
+  https://github.com/EUDAT-DPMT/eudat.accounting.client/issues
