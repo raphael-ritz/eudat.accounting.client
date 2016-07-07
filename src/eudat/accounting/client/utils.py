@@ -1,6 +1,7 @@
 # utilties module from eudat.accounting.client
 # collects methods that could be useful for client code as well
 
+
 USERKEY = "ACCOUNTING_USER"
 PWKEY = "ACCOUNTING_PW"
 URL_PATTERN = "%s/%s/%s/addRecord?"
