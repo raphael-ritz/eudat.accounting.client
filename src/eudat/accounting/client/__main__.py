@@ -43,10 +43,12 @@ class Application(object):
                         help='account to be used. Typically the (P)ID of the '\
                         'resource to be accounted')
         ap.add_argument('value', help='The value to be recorded')
-        ap.add_argument('unit', help='The unit of measurement for the value provided')
+        ap.add_argument('unit', nargs='?', default='Byte', 
+                        help='The unit of measurement for the value provided. '\
+                        'Default: "Byte"')
         ap.add_argument('-b', '--base_url', default='https://acct.eudat.eu',
                         help='base URL of the accounting server to use. '\
-                        'Default: https://accnt.eudat.eu')
+                        'Default: https://accounting.eudat.eu')
 
         ap.add_argument('-u', '--user', default='',
                         help='user id used for logging into the server. '\
@@ -67,16 +69,27 @@ class Application(object):
         ap.add_argument('-k', '--key', default='',
                         help='key used to refer to the record. '\
                         'If not set the accounting server will create the key. '\
+                        'Specifying an existing key will overwrite the existing record. '\
                         'Default: "" - not set')
 
         ap.add_argument('-t', '--type', default='storage',
                         help='type of the resource accounted. '\
                         'Default: storage')
 
+        ap.add_argument('-s', '--service', default='',
+                        help='UID (or PID) of the registered service component reporting '\
+                        'the record. '\
+                        'Default: "" - not set')
+
         ap.add_argument('-n', '--number', default='',
                         help='number of objects associated with this accounting record. '\
                         'This is EUDAT specific. '\
                         'Default: "" - not set')
+
+        ap.add_argument('-o', '--object_type', default='registered objects',
+                        help='object type for the number of objects specified with "-n". '\
+                        'This is EUDAT specific. '\
+                        'Default: "registered objects"')
 
         ap.add_argument('-m', '--measure_time', default='',
                         help='measurement time of the accounting record if different '\
