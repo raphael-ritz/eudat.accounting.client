@@ -40,13 +40,14 @@ Invoke it with ``-h`` to see its usage pattern and options:
   usage: addRecord [-h] [--version] [-b BASE_URL] [-u USER] [-p PASSWORD]
                    [-d DOMAIN] [-k KEY] [-t TYPE] [-n NUMBER] [-m MEASURE_TIME]
                    [-c COMMENT] [-v]
-                   account value unit
+                   account value [unit]
 
   positional arguments:
     account               account to be used. Typically the (P)ID of the
                           resource to be accounted
     value                 The value to be recorded
-    unit                  The unit of measurement for the value provided
+    unit                  The unit of measurement for the value provided.
+                          Default: "Byte"
 
   optional arguments:
     -h, --help            show this help message and exit
@@ -64,12 +65,20 @@ Invoke it with ``-h`` to see its usage pattern and options:
     -d DOMAIN, --domain DOMAIN
                           name of the domain holding the account. Default: eudat
     -k KEY, --key KEY     key used to refer to the record. If not set the
-                          accounting server will create the key. 
+                          accounting server will create the key. Specifying an
+                          existing key will overwrite the existing record.
                           Default: "" - not set
     -t TYPE, --type TYPE  type of the resource accounted. Default: storage
+    -s SERVICE, --service SERVICE
+                          UID (or PID) of the registered service component
+                          reporting the record. Default: "" - not set
     -n NUMBER, --number NUMBER
                           number of objects associated with this accounting
                           record. This is EUDAT specific. Default: "" - not set
+    -o OBJECT_TYPE, --object_type OBJECT_TYPE
+                          object type for the number of objects specified with
+                          "-n". This is EUDAT specific. 
+                          Default: "registered objects"
     -m MEASURE_TIME, --measure_time MEASURE_TIME
                           measurement time of the accounting record if different
                           from the current time. Default: "" - not set
