@@ -10,7 +10,7 @@ Upload accounting records to an eudat accounting server
 from setuptools import setup, find_packages
 import os, sys
 
-version = '1.0.0.b1'
+version = '1.0.0b1'
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 
@@ -32,7 +32,7 @@ setup(name='eudat.accounting.client',
       classifiers=[
           "Environment :: Console",
           "Intended Audience :: System Administrators",
-          "Programming Language :: Python",
+          "Programming Language :: Python :: 2.7",
           "Operating System :: OS Independent",
           "License :: OSI Approved :: BSD License",
           "Topic :: Utilities",
