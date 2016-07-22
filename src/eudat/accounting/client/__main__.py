@@ -43,9 +43,9 @@ class Application(object):
                         help='account to be used. Typically the (P)ID of the '\
                         'resource to be accounted')
         ap.add_argument('value', help='The value to be recorded')
-        ap.add_argument('unit', nargs='?', default='Byte', 
+        ap.add_argument('unit', nargs='?', default='byte', 
                         help='The unit of measurement for the value provided. '\
-                        'Default: "Byte"')
+                        'Default: "byte"')
         ap.add_argument('-b', '--base_url', default='https://acct.eudat.eu',
                         help='base URL of the accounting server to use. '\
                         'Default: https://accounting.eudat.eu')

@@ -10,8 +10,9 @@ consumption per registered resource. Accounting records are submitted per
 individual resource identified by its (P)ID which is available as soon as
 the resource has been registered at https://dp.eudat.eu
 
-Default settings are such that only the resource id, the consumed value and
-its unit need to be provided. The default resource type is set to ``storage``.
+Default settings are such that only the resource id and the consumed value 
+need to be provided. The default unit is ``byte`` and the default resource 
+type is set to ``storage``.
 The full documentation of options supported is described in the next section.
 
 
@@ -47,7 +48,7 @@ Invoke it with ``-h`` to see its usage pattern and options:
                           resource to be accounted
     value                 The value to be recorded
     unit                  The unit of measurement for the value provided.
-                          Default: "Byte"
+                          Default: "byte"
 
   optional arguments:
     -h, --help            show this help message and exit
