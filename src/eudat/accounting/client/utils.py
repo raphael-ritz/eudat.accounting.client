@@ -52,9 +52,14 @@ def getData(args):
         vars.append('key=%s' % args.key)
     for k in ['type', 'value', 'unit']:
         vars.append(core_pattern % (k, getattr(args, k)))
+    hasNumber = False
     for k in ['service', 'number', 'object_type', 'measure_time', 'comment']:
         value = getattr(args, k)
+        if k=='number' and value:
+            hasNumber = True
         if value:
+            if k=='object_type' and not hasNumber:
+                continue
             vars.append(meta_pattern % (k, value))
     qstring = '&'.join(vars)
     LOG.info("query string: " + qstring)
