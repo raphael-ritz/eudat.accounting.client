@@ -1,8 +1,2 @@
-Changes log
-===========
-
-1.0.0
------
-
-- Package creation with ``bobtemplates.gillux``
-  [raphael-ritz]
+1.0.0rc1 (2016-07-22)
+---------------------
