@@ -45,7 +45,7 @@ class Configuration(object):
         self.base_url       =  self.fileparser.get('Report','base_url')
         self.domain         =  self.fileparser.get('Report','domain')
         self.account        =  self.fileparser.get('Report','account')
-        self.user           =  self.fileparser.get('Report','user'),
+        self.user           =  self.fileparser.get('Report','user')
         self.password       =  self.fileparser.get('Report','password')
         self.service_uuid   =  self.fileparser.get('Report','service_uuid')
         self.collections    =  self.fileparser.get('Collections','clist')
@@ -161,10 +161,6 @@ class EUDATAccounting(object):
         self.logger.info('Data: ' + pretty_data)
 
         credentials = utils.getCredentials(self.conf)
-        # sanity check - strange that we seem to need this
-        if type(credentials[0]) == type((1,2)):
-            uname = credentials[0][0]
-            credentials[0] = uname
         url = utils.getUrl(self.conf)
         data = utils.getData(args)
 
