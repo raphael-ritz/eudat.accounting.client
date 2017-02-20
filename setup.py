@@ -51,9 +51,13 @@ setup(name='eudat.accounting.client',
           # 3rd party
           'setuptools',
           'requests',
+          'psycopg2',
           ],
       entry_points={
-          'console_scripts': ['addRecord=eudat.accounting.client.__main__:main']
+          'console_scripts': [
+              'addRecord=eudat.accounting.client.__main__:main',
+              'iRODScollectorPG=eudat.accounting.client.iRODScollectorPG:main',
+          ]
           },
       tests_require=dev_require,
       test_suite='tests.all_tests',
