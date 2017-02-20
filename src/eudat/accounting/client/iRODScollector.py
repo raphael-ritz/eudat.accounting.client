@@ -71,10 +71,11 @@ class Configuration(object):
 class EUDATAccounting(object):
     """Class implementing the computation of statistics about resource consumption."""
 
-    def __init__( self, conf ):
+    def __init__( self, conf, logger ):
         """Initialize object with configuration parameters."""
 
         self.conf = conf
+        self.logger = logger
 
     def _query_iCATDb(self):
         """Query iCATdb for number of stored objects and used space in bytes"""
@@ -94,10 +95,10 @@ class EUDATAccounting(object):
                 if out[:9]=="DATA_SIZE":
                     out     = int(filter(str.isdigit, out))
                     total_space+=int(out)
-                    logger.info("Storage space for collection: "+collection+\
+                    self.logger.info("Storage space for collection: "+collection+\
                                                                 ": "+str(out))
                 else:
-                    logger.info("Wrong output for storage space in collection: "\
+                    self.logger.info("Wrong output for storage space in collection: "\
                                                                     +collection)
 
                 #query number of objects of the collection
@@ -107,15 +108,15 @@ class EUDATAccounting(object):
                 if out[:7]=="DATA_ID":
                     out= int(filter(str.isdigit, out))
                     total_objects+=int(out)
-                    logger.info("number of objects for collection "\
+                    self.logger.info("number of objects for collection "\
                                                     +collection+": "+str(out))
                 else:
-                    logger.info("Wrong output for object number in collection: "\
+                    self.logger.info("Wrong output for object number in collection: "\
                                                                     +collection)
 
             except Exception,e:
                 sys.stdout.write("Exception %s encountered!" % str(e))
-                logger.info("Exception %s encountered!" % str(e))
+                self.logger.info("Exception %s encountered!" % str(e))
                 sys.exit(1)
 
         used_objects= total_objects
@@ -150,7 +151,7 @@ class EUDATAccounting(object):
         acctRecords.append(self._toAccountingRecord(data))
         #data = json.dumps(acctRecords)
         pretty_data = json.dumps(acctRecords, indent=4)
-        logger.info('Data: ' + pretty_data)
+        self.logger.info('Data: ' + pretty_data)
 
         credentials = utils.getCredentials(self.conf)
         url = utils.getUrl(self.conf)
@@ -160,7 +161,7 @@ class EUDATAccounting(object):
             print "Test: Would send the following data: %s" % data
         else:
             response = utils.call(credentials, url, data)
-            logger.info('Data sent. Status code: ' + str(r.status_code))
+            self.logger.info('Data sent. Status code: ' + str(r.status_code))
             print "\nData sent. Status code: " + str(r.status_code)
 
 
@@ -200,7 +201,7 @@ class Application(ApplicationBase):
         configuration = Configuration(self.args.configpath, logger, fileparser)
         configuration.parseConf()
 
-        eurep = EUDATAccounting(configuration)
+        eurep = EUDATAccounting(configuration, logger)
         logger.info("Accounting starting ...")
         eurep.reportStatistics(self.args)
         logger.info("Accounting finished")
