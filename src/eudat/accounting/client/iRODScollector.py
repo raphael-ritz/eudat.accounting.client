@@ -9,6 +9,7 @@ Command line handling
 
 import argparse
 import logging
+import logging.handlers
 import sys
 import subprocess
 
@@ -30,6 +31,8 @@ class Configuration(object):
     def __init__(self, file, logger, fileparser):
 
         self.file = file
+        self.logger = logger
+        self.fileparser = fileparser
 
     def parseConf(self):
 
@@ -37,14 +40,14 @@ class Configuration(object):
 
         print 'Configuration file: %s \n'%self.file
 
-        self.logfile        =  fileparser.get('Logging','log_file')
-        self.base_url       =  fileparser.get('Report','base_url')
-        self.domain         =  fileparser.get('Report','domain')
-        self.account        =  fileparser.get('Report','account')
-        self.user           =  fileparser.get('Report','user'),
-        self.password       =  fileparser.get('Report','password')
-        self.service_uuid   =  fileparser.get('Report','service_uuid')
-        self.collections    =  fileparser.get('Collections','clist')
+        self.logfile        =  self.fileparser.get('Logging','log_file')
+        self.base_url       =  self.fileparser.get('Report','base_url')
+        self.domain         =  self.fileparser.get('Report','domain')
+        self.account        =  self.fileparser.get('Report','account')
+        self.user           =  self.fileparser.get('Report','user'),
+        self.password       =  self.fileparser.get('Report','password')
+        self.service_uuid   =  self.fileparser.get('Report','service_uuid')
+        self.collections    =  self.fileparser.get('Collections','clist')
 
         #create a file handler
         handler = logging.handlers.RotatingFileHandler(self.logfile, \
@@ -58,7 +61,7 @@ class Configuration(object):
         handler.setFormatter(formatter)
 
         # add the handlers to the logger
-        logger.addHandler(handler)
+        self.logger.addHandler(handler)
 
 ################################################################################
 # EUDAT accounting Class #
@@ -195,9 +198,10 @@ class Application(ApplicationBase):
         logger.setLevel(logging.INFO)
 
         configuration = Configuration(self.args.configpath, logger, fileparser)
+        configuration.parseConf()
 
         eurep = EUDATAccounting(configuration)
         logger.info("Accounting starting ...")
-        eureg.reportStatistics(self.args)
+        eurep.reportStatistics(self.args)
         logger.info("Accounting finished")
 
