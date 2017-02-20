@@ -150,13 +150,19 @@ class EUDATAccounting(object):
 
         acctRecords = []
         acctRecords.append(self._toAccountingRecord(data))
+        # this is a hack - adding the data to the args
+        # so other command line args resp their defaults 
+        # are available as well
+        self.account = acctRecords[0]['account']
+        self.value = acctRecords[0]['value']
+        self.number = acctRecords[0]['number']
         #data = json.dumps(acctRecords)
         pretty_data = json.dumps(acctRecords, indent=4)
         self.logger.info('Data: ' + pretty_data)
 
         credentials = utils.getCredentials(self.conf)
         url = utils.getUrl(self.conf)
-        data = utils.getData(acctRecords[0])
+        data = utils.getData(args)
 
         if args.test:
             print "Test: Would send the following data: %s" % data
