@@ -74,3 +74,4 @@ class Application(ApplicationBase):
         cur.close()
         conn.close()
 
+        print records
