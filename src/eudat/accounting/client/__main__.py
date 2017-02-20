@@ -72,7 +72,7 @@ class Application(object):
                         'Specifying an existing key will overwrite the existing record. '\
                         'Default: "" - not set')
 
-        ap.add_argument('-t', '--type', default='storage',
+        ap.add_argument('-T', '--type', default='storage',
                         help='type of the resource accounted. '\
                         'Default: storage')
 
@@ -96,9 +96,17 @@ class Application(object):
                         'from the current time. '\
                         'Default: "" - not set')
 
-        ap.add_argument('-c', '--comment', default='',
+        ap.add_argument('-C', '--comment', default='',
                         help='arbitrary comment (goes into the meta dictionary). '\
                         'Default: "" - not set')
+
+        ap.add_argument('-c', '--configpath', default='./irodscollector.cfg',
+                        help='path to configuration file. '\
+                        'Default: "./irodscollector.cfg" (in the current working directory)')
+
+        ap.add_argument('-t', '--test', action='store_true',
+                        help="Don't push data to server - run only locally "\
+                        'Default: off')
 
         ap.add_argument('-v', '--verbose', action='store_true',
                         help='return the key of the accounting record created. '\
