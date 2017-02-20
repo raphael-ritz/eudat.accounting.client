@@ -168,8 +168,8 @@ class EUDATAccounting(object):
             print "Test: Would send the following data: %s" % data
         else:
             response = utils.call(credentials, url, data)
-            self.logger.info('Data sent. Status code: ' + str(r.status_code))
-            print "\nData sent. Status code: " + str(r.status_code)
+            self.logger.info('Data sent. Status code: ' + str(response.status_code))
+            print "\nData sent. Status code: " + str(response.status_code)
 
 
 
