@@ -161,6 +161,10 @@ class EUDATAccounting(object):
         self.logger.info('Data: ' + pretty_data)
 
         credentials = utils.getCredentials(self.conf)
+        # sanity check - strange that we seem to need this
+        if type(credentials[0]) == type((1,2)):
+            uname = credentials[0][0]
+            credentials[0] = uname
         url = utils.getUrl(self.conf)
         data = utils.getData(args)
 
