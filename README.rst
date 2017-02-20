@@ -82,7 +82,8 @@ Invoke it with ``-h`` to see its usage pattern and options:
                           Default: "registered objects"
     -m MEASURE_TIME, --measure_time MEASURE_TIME
                           measurement time of the accounting record if different
-                          from the current time. Default: "" - not set
+                          from the submission time. It is recommended best
+                          practice to use UTC. Default: "" - not set
     -c COMMENT, --comment COMMENT
                           arbitrary comment (goes into the meta dictionary).
                           Default: "" - not set

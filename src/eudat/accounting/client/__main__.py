@@ -46,7 +46,7 @@ class Application(object):
         ap.add_argument('unit', nargs='?', default='byte', 
                         help='The unit of measurement for the value provided. '\
                         'Default: "byte"')
-        ap.add_argument('-b', '--base_url', default='https://acct.eudat.eu',
+        ap.add_argument('-b', '--base_url', default='https://accounting.eudat.eu',
                         help='base URL of the accounting server to use. '\
                         'Default: https://accounting.eudat.eu')
 
