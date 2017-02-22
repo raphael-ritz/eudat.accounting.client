@@ -167,9 +167,9 @@ class EUDATAccounting(object):
         self.logger.info("Credentials found")
         self.logger.debug("Credentials: " + credentials)
         url = utils.getUrl(self.conf)
-        logger.info("URL to call: " + url)
+        self.logger.info("URL to call: " + url)
         data = utils.getData(args)
-        logger.info("Data as query string: " + data)
+        self.logger.info("Data as query string: " + data)
 
         if args.test:
             print "Test: Would send the following data: " \
