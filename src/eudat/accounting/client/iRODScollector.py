@@ -165,7 +165,7 @@ class EUDATAccounting(object):
 
         credentials = utils.getCredentials(self.conf)
         self.logger.info("Credentials found")
-        self.logger.debug("Credentials: " + credentials)
+        self.logger.debug("Credentials: " + str(credentials))
         url = utils.getUrl(self.conf)
         self.logger.info("URL to call: " + url)
         data = utils.getData(args)
