@@ -183,7 +183,7 @@ class EUDATAccounting(object):
         if args.verbose:
             print "\nData sent. Status code: " \
                 + str(response.status_code)
-            print "Key of generated accounting record" \
+            print "Key of generated accounting record: " \
                 + response.text
 
 
