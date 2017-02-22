@@ -88,6 +88,7 @@ class EUDATAccounting(object):
         total_space   = 0
         print "Collections to be accounted:"
         for collection in collections:
+            print collection
             try:
                 # query size of the collection in bytes
                 out=self._raw_query(collection,"DATA_SIZE","sum")
