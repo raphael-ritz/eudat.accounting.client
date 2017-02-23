@@ -210,7 +210,23 @@ def main(argv=sys.argv):
 class Application(ApplicationBase):
     """
     The main Application class of the iRODScollector
+
+    :param argv: The command line as a list as ``sys.argv``
     """
+
+    def __init__(self, argv):
+        ap = argparse.ArgumentParser()
+        ap.add_argument('--version', action='version', version=__version__)
+
+        ap.add_argument('-c', '--configpath', default='./irodscollector.cfg',
+                        help='path to configuration file. '\
+                        'Default: "./irodscollector.cfg" (in the current working directory)')
+    
+        utils.addCommonArguments(ap)
+
+        self.args = ap.parse_args(args=argv[1:])
+        """Arguments of your app"""
+
 
     def run(self):
         LOG.info("iRODScollector called with: " + str(self.args))

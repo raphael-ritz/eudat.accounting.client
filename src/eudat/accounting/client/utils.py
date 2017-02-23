@@ -12,6 +12,38 @@ import requests
 
 from eudat.accounting.client import LOG
 
+def addCommonArguments(ap):
+    """
+    Add commandline arguments common to all clients
+    """
+    ap.add_argument('-k', '--key', default='',
+                    help='key used to refer to the record. '\
+                    'If not set the accounting server will create the key. '\
+                    'Specifying an existing key will overwrite the existing record. '\
+                    'Default: "" - not set')
+    
+    ap.add_argument('-T', '--type', default='storage',
+                    help='type of the resource accounted. '\
+                    'Default: storage')
+    
+    ap.add_argument('-m', '--measure_time', default='',
+                    help='measurement time of the accounting record if different '\
+                    'from the current time. '\
+                    'Default: "" - not set')
+    
+    ap.add_argument('-C', '--comment', default='',
+                    help='arbitrary comment (goes into the meta dictionary). '\
+                    'Default: "" - not set')
+    
+    ap.add_argument('-t', '--test', action='store_true',
+                    help="Dry run. Don't push data to server - run only locally "\
+                    'Default: off')
+    
+    ap.add_argument('-v', '--verbose', action='store_true',
+                    help='return the key of the accounting record created. '\
+                    'Default: off')
+   
+
 def getCredentials(args):
     """Extracts and returns (username, password) from args.
     Looks into environment varaibles ACCOUNTING_USER and

@@ -32,7 +32,8 @@ def main(argv=sys.argv):
 
 
 class Application(object):
-    """The main Application class
+    """
+    The main Application class
 
     :param argv: The command line as a list as ``sys.argv``
     """
@@ -66,16 +67,6 @@ class Application(object):
                         help='name of the domain holding the account. '\
                         'Default: eudat')
 
-        ap.add_argument('-k', '--key', default='',
-                        help='key used to refer to the record. '\
-                        'If not set the accounting server will create the key. '\
-                        'Specifying an existing key will overwrite the existing record. '\
-                        'Default: "" - not set')
-
-        ap.add_argument('-T', '--type', default='storage',
-                        help='type of the resource accounted. '\
-                        'Default: storage')
-
         ap.add_argument('-s', '--service', default='',
                         help='UID (or PID) of the registered service component reporting '\
                         'the record. '\
@@ -85,32 +76,13 @@ class Application(object):
                         help='number of objects associated with this accounting record. '\
                         'This is EUDAT specific. '\
                         'Default: "" - not set')
-
+        
         ap.add_argument('-o', '--object_type', default='registered objects',
                         help='object type for the number of objects specified with "-n". '\
                         'This is EUDAT specific. '\
                         'Default: "registered objects"')
 
-        ap.add_argument('-m', '--measure_time', default='',
-                        help='measurement time of the accounting record if different '\
-                        'from the current time. '\
-                        'Default: "" - not set')
-
-        ap.add_argument('-C', '--comment', default='',
-                        help='arbitrary comment (goes into the meta dictionary). '\
-                        'Default: "" - not set')
-
-        ap.add_argument('-c', '--configpath', default='./irodscollector.cfg',
-                        help='path to configuration file. '\
-                        'Default: "./irodscollector.cfg" (in the current working directory)')
-
-        ap.add_argument('-t', '--test', action='store_true',
-                        help="Don't push data to server - run only locally "\
-                        'Default: off')
-
-        ap.add_argument('-v', '--verbose', action='store_true',
-                        help='return the key of the accounting record created. '\
-                        'Default: off')
+        utils.addCommonArguments(ap)
 
         self.args = ap.parse_args(args=argv[1:])
         """Arguments of your app"""
