@@ -159,7 +159,6 @@ class EUDATAccounting(object):
         # resp their defaults are available as well
         args.account = acctRecords[0]['account']
         args.value = acctRecords[0]['value']
-        args.unit = 'byte'
         args.number = acctRecords[0]['number']
         pretty_data = json.dumps(acctRecords, indent=4)
         self.logger.info('Data: ' + pretty_data)
@@ -226,6 +225,9 @@ class Application(ApplicationBase):
         utils.addCommonArguments(ap)
 
         self.args = ap.parse_args(args=argv[1:])
+        # sneak in some default values that the utility functions expect
+        self.args.unit = 'byte'
+        self.args.service = '(default)'  # XXX TODO: should this come from the config?
         """Arguments of your app"""
 
 
