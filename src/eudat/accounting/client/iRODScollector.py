@@ -228,6 +228,7 @@ class Application(ApplicationBase):
         # sneak in some default values that the utility functions expect
         self.args.unit = 'byte'
         self.args.service = '(default)'  # XXX TODO: should this come from the config?
+        self.args.object_type = 'registered object'
         """Arguments of your app"""
 
 
