@@ -159,6 +159,7 @@ class EUDATAccounting(object):
         # resp their defaults are available as well
         args.account = acctRecords[0]['account']
         args.value = acctRecords[0]['value']
+        args.unit = 'byte'
         args.number = acctRecords[0]['number']
         pretty_data = json.dumps(acctRecords, indent=4)
         self.logger.info('Data: ' + pretty_data)
