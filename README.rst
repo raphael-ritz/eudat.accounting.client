@@ -32,15 +32,19 @@ It is usually best to do this in a ``virtualenv``:
 Command line interface
 ----------------------
 
-As a result of the above there is now a console script called ``addRecord``.
-Invoke it with ``-h`` to see its usage pattern and options:
+As a result of the above there are now two console script called 
+``addRecord`` and ``iRODScollector``.
+Invoke it with ``-h`` to see its usage pattern and options.
+
+addRecord
+~~~~~~~~~
 
 .. code:: console
 
   $ bin/addRecord -h
   usage: addRecord [-h] [--version] [-b BASE_URL] [-u USER] [-p PASSWORD]
-                   [-d DOMAIN] [-k KEY] [-t TYPE] [-n NUMBER] [-m MEASURE_TIME]
-                   [-c COMMENT] [-v]
+                   [-d DOMAIN] [-s SERVICE] [-n NUMBER] [-o OBJECT_TYPE]
+                   [-k KEY] [-T TYPE] [-m MEASURE_TIME] [-C COMMENT] [-t] [-v]
                    account value [unit]
 
   positional arguments:
@@ -55,7 +59,7 @@ Invoke it with ``-h`` to see its usage pattern and options:
     --version             show program's version number and exit
     -b BASE_URL, --base_url BASE_URL
                           base URL of the accounting server to use. Default:
-                          https://accnt.eudat.eu
+                          https://accounting.eudat.eu
     -u USER, --user USER  user id used for logging into the server. If not
                           provided it is looked up in the environment variable
                           "ACCOUNTING_USER". Default: "" - aka not set
@@ -65,11 +69,6 @@ Invoke it with ``-h`` to see its usage pattern and options:
                           "ACCOUNTING_PW". Default: "" - aka not set
     -d DOMAIN, --domain DOMAIN
                           name of the domain holding the account. Default: eudat
-    -k KEY, --key KEY     key used to refer to the record. If not set the
-                          accounting server will create the key. Specifying an
-                          existing key will overwrite the existing record.
-                          Default: "" - not set
-    -t TYPE, --type TYPE  type of the resource accounted. Default: storage
     -s SERVICE, --service SERVICE
                           UID (or PID) of the registered service component
                           reporting the record. Default: "" - not set
@@ -78,26 +77,107 @@ Invoke it with ``-h`` to see its usage pattern and options:
                           record. This is EUDAT specific. Default: "" - not set
     -o OBJECT_TYPE, --object_type OBJECT_TYPE
                           object type for the number of objects specified with
-                          "-n". This is EUDAT specific. 
-                          Default: "registered objects"
+                          "-n". This is EUDAT specific. Default: "registered
+                          objects"
+    -k KEY, --key KEY     key used to refer to the record. If not set the
+                          accounting server will create the key. Specifying an
+                          existing key will overwrite the existing record.
+                          Default: "" - not set
+    -T TYPE, --type TYPE  type of the resource accounted. Default: storage
     -m MEASURE_TIME, --measure_time MEASURE_TIME
                           measurement time of the accounting record if different
-                          from the submission time. It is recommended best
-                          practice to use UTC. Default: "" - not set
-    -c COMMENT, --comment COMMENT
+                          from the current time. Default: "" - not set
+    -C COMMENT, --comment COMMENT
                           arbitrary comment (goes into the meta dictionary).
                           Default: "" - not set
+    -t, --test            Dry run. Don't push data to server - run only locally
+                          Default: off
     -v, --verbose         return the key of the accounting record created.
                           Default: off
 
 
-Most of this should be self-explaining. Note that you need to provide credentails
-for the accounting service. If you do not have any contact the EUDAT accounting 
-manager.
+iRODScollector
+~~~~~~~~~~~~~~
 
-Basic usage information as well as error messages are logged to a file named
-``.accounting.log`` in the current working directory from where ``addRecord``
-has been invoked.
+.. code:: console
+
+  $ bin/iRODScollector -h
+  usage: iRODScollector [-h] [--version] [-c CONFIGPATH] [-k KEY] [-T TYPE]
+                        [-m MEASURE_TIME] [-C COMMENT] [-t] [-v]
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    --version             show program's version number and exit
+    -c CONFIGPATH, --configpath CONFIGPATH
+                          path to configuration file. Default:
+                          "./irodscollector.cfg" (in the current working
+                          directory)
+    -k KEY, --key KEY     key used to refer to the record. If not set the
+                          accounting server will create the key. Specifying an
+                          existing key will overwrite the existing record.
+                          Default: "" - not set
+    -T TYPE, --type TYPE  type of the resource accounted. Default: storage
+    -m MEASURE_TIME, --measure_time MEASURE_TIME
+                          measurement time of the accounting record if different
+                          from the current time. Default: "" - not set
+    -C COMMENT, --comment COMMENT
+                          arbitrary comment (goes into the meta dictionary).
+                          Default: "" - not set
+    -t, --test            Dry run. Don't push data to server - run only locally
+                          Default: off
+    -v, --verbose         return the key of the accounting record created.
+                          Default: off
+
+A template configuration file is included in the distribution and 
+looks like this:
+
+.. code:: console
+
+  $ cat irodscollector.ini
+
+  #
+  # template of a configuration file for EUDAT's irodscollector
+  #
+
+  # section containing the logging options
+  [Logging]
+  log_file=eudatacct.log
+
+  # section containing the properties to access the accounting server
+  # to get statistical data and report them
+  [Report]
+  # base URL of the accounting server to be used
+  base_url=https://accounting.eudat.eu
+  # domain: either eudat or test or demo
+  domain=eudat
+  # uid of the corresponding registered storage resource on DPMT 
+  # (same as storage_space_uuid on RCT)
+  account=<insert uid here>
+  # username of the provider on the accouniting server
+  # owning the account specified above
+  # contact dp-admin@mpcdf.mpg.de if you need one
+  user=<username of provider>
+  # if you have an access token from RCT already reuse that here
+  password=<password or access token>
+  service_uuid=<unsuported at the moment>
+
+  # section contains the list of collections to be accounted together, replace
+  # the examples with your collections, the script sums the values of all
+  # collections and sends it to EUDAT's accounting service.
+  [Collections]
+  clist=
+    /zone/some/path
+    /zone/other/path
+
+Copy this to ``irodscollector.cfg`` and adapt it to your site.
+ 
+Most of this should be self-explaining. Note that you need to 
+provide credentails for the accounting service. If you do not 
+have any contact the EUDAT accounting manager.
+
+Basic usage information as well as error messages are logged 
+to a file named ``.accounting.log`` in the current working 
+directory from where ``addRecord`` has been invoked.
 
 
 Developer notes
