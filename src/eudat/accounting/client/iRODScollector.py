@@ -134,8 +134,8 @@ class EUDATAccounting(object):
         """
         construct query string and pipe it to iquest
         """
-        query = "select %s(%s) where COLL_NAME like '%s%%' | grep %s" \
-                % (db_func, data_type, collection, data_type)
+        query = "select %s(%s) where COLL_NAME = '%s' || like '%s%%' | grep %s" \
+                % (db_func, data_type, collection, collection, data_type)
         process = subprocess.Popen(["iquest",query], 
                                    stdout=subprocess.PIPE)
         out,err = process.communicate()
