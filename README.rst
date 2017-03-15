@@ -8,12 +8,20 @@ Administrators of (storage) resources provided through the EUDAT Common Data
 Infrastructure can use this tool to conveniently report current resource 
 consumption per registered resource. Accounting records are submitted per
 individual resource identified by its (P)ID which is available as soon as
-the resource has been registered at https://dp.eudat.eu
+the resource has been registered at EUDAT's Data Project Management Tool (DPMT_).
 
 Default settings are such that only the resource id and the consumed value 
 need to be provided. The default unit is ``byte`` and the default resource 
 type is set to ``storage``.
 The full documentation of options supported is described in the next section.
+
+If the tools provided here do not address your use case you can either file
+a feature request on the tracker_ or use a more low-level approach as 
+outlined in the `server documentation`_.
+
+.. _DPMT: https://dp.eudat.eu
+.. _tracker: https://github.com/EUDAT-DPMT/eudat.accounting.client/issues
+.. _`server documentation`: https://github.com/EUDAT-DPMT/eudat.accounting.server/blob/master/README.rst#adding-records
 
 
 Full documentation and API
@@ -175,9 +183,14 @@ Most of this should be self-explaining. Note that you need to
 provide credentails for the accounting service. If you do not 
 have any contact the EUDAT accounting manager.
 
+In addition, you need to make sure that the user invoking 
+this script has a suitable iRODS_ environment set up.
+
 Basic usage information as well as error messages are logged 
 to a file named ``.accounting.log`` in the current working 
 directory from where ``addRecord`` has been invoked.
+
+.. _iRODS: https://irods.org/
 
 
 Developer notes
