@@ -221,6 +221,16 @@ Run the tests (not really that meaningful so far):
   $ python run_tests.py
 
 
+Authors
+=======
+
+ - Raphael Ritz, MPCDF (main author)
+
+ - Claudio Cacciari, CINECA (initial iRODScollector)
+
+ - Pavel Weber, KIT (improved iRODScollector)
+
+
 Links
 =====
 
