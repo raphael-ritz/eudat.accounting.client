@@ -12,7 +12,11 @@ import logging.handlers
 import sys
 import subprocess
 
-from ConfigParser import SafeConfigParser
+try:
+    from ConfigParser import SafeConfigParser
+except ImportError:
+    # Python 3
+    from configparser import SafeConfigParser
 
 from eudat.accounting.client import __version__, LOG, utils
 from eudat.accounting.client.__main__ import Application as ApplicationBase
@@ -37,7 +41,7 @@ class Configuration(object):
 
         """Parse configuration file"""
 
-        print 'Configuration file: %s \n'%self.file
+        print('Configuration file: %s \n'%self.file)
 
         self.logfile        =  self.fileparser.get('Logging','log_file')
         self.base_url       =  self.fileparser.get('Report','base_url')
@@ -86,9 +90,9 @@ class EUDATAccounting(object):
         collections = self.conf.collections.split()
         total_objects = 0
         total_space   = 0
-        print "Collections to be accounted:"
+        print("Collections to be accounted:")
         for collection in collections:
-            print collection
+            print(collection)
             try:
                 # query size of the collection in bytes
                 out=self._raw_query(collection,"DATA_SIZE","sum")
@@ -116,7 +120,7 @@ class EUDATAccounting(object):
                     self.logger.warn("Wrong output for object number "\
                                      "in collection: "+collection)
 
-            except Exception,e:
+            except Exception as e:
                 sys.stdout.write("Exception %s encountered!" % str(e))
                 self.logger.warn("Exception %s encountered!" % str(e))
                 sys.exit(1)
@@ -172,8 +176,8 @@ class EUDATAccounting(object):
         self.logger.info("Data as query string: " + data)
 
         if args.test:
-            print "Test: Would send the following data: " \
-                + data
+            print("Test: Would send the following data: " \
+                + data)
             return None
 
         response = utils.call(credentials, url, data)
@@ -181,10 +185,10 @@ class EUDATAccounting(object):
         self.logger.info('Data sent. Status code: ' \
                          + str(response.status_code))
         if args.verbose:
-            print "\nData sent. Status code: " \
-                + str(response.status_code)
-            print "Key of generated accounting record: " \
-                + response.text
+            print("\nData sent. Status code: " \
+                + str(response.status_code))
+            print("Key of generated accounting record: " \
+                + response.text)
 
 
 def main(argv=sys.argv):
@@ -234,7 +238,7 @@ class Application(ApplicationBase):
 
     def run(self):
         LOG.info("iRODScollector called with: " + str(self.args))
-        print "iRODScollector called with: %s" % str(self.args)
+        print("iRODScollector called with: %s" % str(self.args))
 
         fileparser = SafeConfigParser()
         fileparser.read(self.args.configpath)

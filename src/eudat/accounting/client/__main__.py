@@ -99,7 +99,7 @@ class Application(object):
         LOG.info("status: %s -- record key: %s" % (response.status_code,
                                                    response.text))
         if self.args.verbose:
-            print response.text
+            print(response.text)
 
 if __name__ == '__main__':
     main()
