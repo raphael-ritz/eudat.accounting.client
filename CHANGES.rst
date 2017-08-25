@@ -1,7 +1,8 @@
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- addRecord now also supports the dry run option '-t' 
+  This addresses issue #3 [raphael-ritz]
 
 
 1.0.0 (2017-03-15)

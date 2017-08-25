@@ -92,14 +92,17 @@ class Application(object):
         credentials = utils.getCredentials(self.args)
         url = utils.getUrl(self.args)
         data = utils.getData(self.args)
-        response = utils.call(credentials, url, data)
-        if not response.ok:
-            LOG.error("status: %s" % response.status_code)
-            sys.exit(str(response.status_code))
-        LOG.info("status: %s -- record key: %s" % (response.status_code,
-                                                   response.text))
-        if self.args.verbose:
-            print(response.text)
+        if not self.args.test:
+            response = utils.call(credentials, url, data)
+            if self.args.verbose:
+                print(response.text)
+            if not response.ok:
+                LOG.error("status: %s" % response.status_code)
+                sys.exit(str(response.status_code))
+            LOG.info("status: %s -- record key: %s" % (response.status_code,
+                                                       response.text))
+        else:
+            print("Dry run; would call %s with %s" % (url, data))
 
 if __name__ == '__main__':
     main()
