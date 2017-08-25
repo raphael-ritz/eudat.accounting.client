@@ -10,7 +10,7 @@ Upload accounting records to an eudat accounting server
 from setuptools import setup, find_packages
 import os, sys
 
-version = '1.0.1'
+version = '1.0.2.dev0'
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 
