@@ -46,11 +46,37 @@ class Configuration(object):
         self.logfile        =  self.fileparser.get('Logging','log_file')
         self.base_url       =  self.fileparser.get('Report','base_url')
         self.domain         =  self.fileparser.get('Report','domain')
-        self.account        =  self.fileparser.get('Report','account')
-        self.user           =  self.fileparser.get('Report','user')
-        self.password       =  self.fileparser.get('Report','password')
-        self.service_uuid   =  self.fileparser.get('Report','service_uuid')
-        self.collections    =  self.fileparser.get('Collections','clist')
+
+        ### Reads the information of the institutes into a list of dictionaries, one for each institute
+        #   !!! Assumes correct syntax in config file: Does not check if there is a separate section for each institute listed in the 'Report' section
+        if self.fileparser.has_option('Report', 'institutes'):
+            self.hasInstitutes = True
+            inst          =  self.fileparser.get('Report','institutes')
+            inst          =  inst.split(',')
+            self.institutes = []
+            for instName in inst:
+                valueDict = {}
+                valueDict['name']              =  instName
+                valueDict['account']           =  self.fileparser.get(instName, 'account')
+                valueDict['user']              =  self.fileparser.get(instName, 'user')
+                valueDict['password']          =  self.fileparser.get(instName, 'password')
+                valueDict['service_uuid']      =  self.fileparser.get(instName, 'service_uuid')
+                valueDict['clist']             =  self.fileparser.get(instName, 'clist')
+                self.institutes.append(valueDict)
+                self.currentInst = -1
+        else:
+            # ensures that it works with the original version of the config file that doesn't have separate institutes
+            self.hasInstitutes = False
+            self.account        =  self.fileparser.get('Report','account')
+            self.user           =  self.fileparser.get('Report','user')
+            self.password       =  self.fileparser.get('Report','password')
+            self.service_uuid   =  self.fileparser.get('Report','service_uuid')
+            self.collections    =  self.fileparser.get('Collections','clist')
+            self.currentInst = -2
+
+        self.setNextInstitute()
+
+		###
 
         #create a file handler
         handler = logging.handlers.RotatingFileHandler(self.logfile, \
@@ -65,6 +91,30 @@ class Configuration(object):
 
         # add the handlers to the logger
         self.logger.addHandler(handler)
+
+    def setNextInstitute(self):
+
+        """" Used to iterate between institutes that are in the config file:
+             increments self.currentInst and sets the information in the configuration class to that of the new institute
+             Starts from the begining when the currentInst is -1 and ends (returns False) currentInst+1 falls out of the list range
+        """
+        
+        self.currentInst += 1 
+        instNum = self.currentInst
+
+        if not self.hasInstitutes or instNum < 0 or instNum >= len(self.institutes):
+            self.currentInst = -2
+            return False
+        self.account        =  self.institutes[instNum]['account']
+        self.user           =  self.institutes[instNum]['user']
+        self.password       =  self.institutes[instNum]['password']
+        self.service_uuid   =  self.institutes[instNum]['service_uuid']
+        self.collections    =  self.institutes[instNum]['clist']
+
+        print("*** institute: " + self.institutes[instNum]['name'])
+
+        return self.institutes[instNum]['name']
+
 
 ################################################################################
 # EUDAT accounting Class #
@@ -245,7 +295,7 @@ class Application(ApplicationBase):
 
         logger = logging.getLogger('StorageAccounting')
         logger.setLevel(logging.INFO)
-
+###
         configuration = Configuration(self.args.configpath, 
                                       logger, fileparser)
         configuration.parseConf()
@@ -253,5 +303,7 @@ class Application(ApplicationBase):
         eurep = EUDATAccounting(configuration, logger)
         logger.info("Accounting starting ...")
         eurep.reportStatistics(self.args)
+        # ierate between instituteds and report statistics for each one separately
+        while configuration.setNextInstitute():
+            eurep.reportStatistics(self.args)
         logger.info("Accounting finished")
-
