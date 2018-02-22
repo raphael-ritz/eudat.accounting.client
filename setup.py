@@ -51,6 +51,7 @@ setup(name='eudat.accounting.client',
           # 3rd party
           'setuptools',
           'requests',
+          'psycopg2',
           ],
       entry_points={
           'console_scripts': [
