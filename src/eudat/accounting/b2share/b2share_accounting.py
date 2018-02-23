@@ -61,4 +61,7 @@ class B2SHAREAccounting(object):
             if db_conn:
                 db_conn.close()
 
-        return accounting[self.account], 0
+        if self.account in accounting:
+            return accounting[self.account], 0
+        else:
+            return 0, 0
