@@ -52,8 +52,8 @@ class Configuration(object):
         self.service_uuid = self.fileparser.get('Report', 'service_uuid')
         self.db_user = self.fileparser.get('Database', 'user')
         self.db_host = self.fileparser.get('Database', 'host')
-        self.db_name == self.fileparser.get('Database', 'name')
-        self.db_password == self.fileparser.get('Database', 'password')
+        self.db_name = self.fileparser.get('Database', 'name')
+        self.db_password = self.fileparser.get('Database', 'password')
 
         # create a file handler
         handler = logging.handlers.RotatingFileHandler(self.logfile, \
