@@ -50,10 +50,8 @@ class Configuration(object):
         self.user = self.fileparser.get('Report', 'user')
         self.password = self.fileparser.get('Report', 'password')
         self.service_uuid = self.fileparser.get('Report', 'service_uuid')
-        self.db_user = self.fileparser.get('Database', 'user')
-        self.db_host = self.fileparser.get('Database', 'host')
-        self.db_name = self.fileparser.get('Database', 'name')
-        self.db_password = self.fileparser.get('Database', 'password')
+        self.b2share_community = self.fileparser.get('B2SHARE', 'community')
+        self.b2share_url = self.fileparser.get('B2SHARE', 'url')
 
         # create a file handler
         handler = logging.handlers.RotatingFileHandler(self.logfile, \
@@ -86,7 +84,7 @@ class EUDATAccounting(object):
         """
         self.conf = conf
         self.logger = logger
-        self.b2share_accounting = B2SHAREAccounting(conf)
+        self.b2share_accounting = B2SHAREAccounting(conf, logger)
 
     def _toAccountingRecord(self, stats):
         """
