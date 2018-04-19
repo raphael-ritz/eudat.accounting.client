@@ -31,8 +31,18 @@ class B2SHAREAccounting(object):
     def report(self, args):
 
         url = self.url + "/api/records/?q=community:" + self.community
-        r = requests.get(url, verify=True)
+        try:
+            r = requests.get(url, verify=True)
+        except requests.exceptions.RequestException as e:
+            self.logger.error('get community records request failed:' + str(e))
+            return 0, 0
         if r.status_code != requests.codes.ok:
-            self.logger.warning('get community records status code: %d', r.status_code)
+            self.logger.warn('get community records status code:' + r.status_code)
 
-        return (r.json()['hits']['total'], 0) if (r.status_code == requests.codes.ok) else (0, 0)
+        total_amount = 0
+        for record in r.json()['hits']['hits']:
+            if 'files' in record:
+                for record_file in record['files']:
+                    total_amount += record_file['size']
+
+        return (r.json()['hits']['total'], total_amount) if (r.status_code == requests.codes.ok) else (0, 0)
