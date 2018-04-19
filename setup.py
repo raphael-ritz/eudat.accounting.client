@@ -10,7 +10,7 @@ Upload accounting records to an eudat accounting server
 from setuptools import setup, find_packages
 import os, sys
 
-version = '1.0.2.dev0'
+version = '1.0.2.dev0-b2share'
 
 this_directory = os.path.abspath(os.path.dirname(__file__))
 
@@ -56,6 +56,7 @@ setup(name='eudat.accounting.client',
           'console_scripts': [
               'addRecord=eudat.accounting.client.__main__:main',
               'iRODScollector=eudat.accounting.client.iRODScollector:main',
+              'B2SHAREcollector=eudat.accounting.b2share.b2share_collector:main'
           ]
           },
       tests_require=dev_require,
